@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "/home/prunoideae/miniconda3/bin/python"
+    "python.pythonPath": "/home/prunoideae/miniconda3/bin/python",
+    "rust-analyzer.linkedProjects": [
+        "client/Cargo.toml",
+        "server/Cargo.toml",
+    ]
 }

@@ -1,2 +1,4 @@
 /server/target
 /client/target
+/.vscode
+__pycache__
