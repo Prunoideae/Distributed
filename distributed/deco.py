@@ -1,10 +1,7 @@
 
-from io import UnsupportedOperation
-from types import FunctionType
-from typing import Any, Callable
-from . import states
+from typing import Callable
 from .enums import Sides
-from .models import Sided, Proxy
+from .models import Distributed, Sided, Proxy
 
 
 def distributed(platform='*', threads=-1, memory=-1, strict=False):
@@ -18,7 +15,10 @@ def distributed(platform='*', threads=-1, memory=-1, strict=False):
     namespaces are quickly destroyed once the analyze is complete, and only from
     main can invoke them.
     '''
-    pass
+
+    def distributed_wrapper(func):
+        return Distributed(func, platform, threads, memory, strict)
+    return distributed_wrapper
 
 
 def sided(side: Sides):

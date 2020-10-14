@@ -13,6 +13,8 @@ __side__ = None
 
 __queue__ = []
 
+__pending__ = {}
+
 __ident__ = None
 
 __distributed__ = []
@@ -29,7 +31,7 @@ class __sys__:
         return psutil.virtual_memory().available
 
     def disk(self) -> int:
-        pass
+        return -1
 
 
 __sys__ = __sys__()

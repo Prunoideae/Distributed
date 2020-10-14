@@ -1,7 +1,7 @@
+import pickle
+from sys import modules
 from .utils import md5
 from io import UnsupportedOperation
-import pickle
-import traceback
 from . import states
 from .enums import Sides
 import sys
@@ -52,22 +52,23 @@ class Task():
 class Distributed():
 
     def __init__(self, func: Callable, platform, threads, memory, strict) -> None:
-        self.func = func
-        self.module = func.__module__
+        self.ident = f'{func.__module__}/{func.__name__}'
+        states.__distributed__[self.ident] = func
+
         self.platform = platform
         self.threads = threads
         self.memory = memory
         self.strict = strict
 
-        if states.__side__ == Sides.WORKER:
-            pass
-
     def __call__(self, *args: Any, **kwds: Any) -> Any:
         if states.__side__ != Sides.MAIN:
-            raise UnsupportedOperation("Cannot submit a Worker function in Worker side.")
+            raise UnsupportedOperation("Cannot submit a Worker function on Worker side.")
+
+        uid = f'{states.__ident__}@{self.ident}'
+        arg = pickle.dumps((args, kwds))
 
         # TODO: handle the request and return a task
-        return self.func(*args, **kwds)
+        states.__queue__.append(Task())
 
 
 class Sided():

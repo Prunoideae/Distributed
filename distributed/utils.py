@@ -1,4 +1,6 @@
 import hashlib
+from . import states
+from .enums import Sides
 
 
 def md5(fn):
